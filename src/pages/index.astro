@@ -1,0 +1,54 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { config } from '../config';
+import { Github, Linkedin, Mail, Hash } from 'lucide-astro';
+
+// Icon component mapping
+const iconMap = {
+  github: Github,
+  linkedin: Linkedin,
+  email: Mail,
+  mastodon: Hash // Using Hash for Mastodon (hashtag/social media)
+};
+---
+
+<Layout title={config.title} description={config.metaDescription}>
+  <div class="min-h-screen bg-gray-900 flex items-center justify-center p-4">
+    <div class="text-center max-w-2xl px-4">
+      <!-- Profile Avatar -->
+      <img
+        src={config.avatar}
+        alt={config.name}
+        class="w-64 h-64 sm:w-80 sm:h-80 mx-auto mb-8 sm:mb-10 rounded-full object-cover shadow-lg"
+      />
+      
+      <!-- Name -->
+      <h1 class="text-3xl sm:text-5xl font-bold text-white mb-4 sm:mb-6">
+        {config.name}
+      </h1>
+      
+      <!-- Description -->
+      <p class="text-gray-300 text-lg sm:text-xl mb-8 sm:mb-10 leading-relaxed px-2">
+        {config.description}
+      </p>
+      
+      <!-- Social Links -->
+      <div class="flex justify-center space-x-4 sm:space-x-8">
+        {config.socialLinks.map((link) => {
+          const IconComponent = iconMap[link.icon as keyof typeof iconMap];
+          return (
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="p-3 sm:p-4 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors duration-200 group"
+              aria-label={link.label}
+            >
+              <IconComponent class="w-6 h-6 sm:w-8 sm:h-8 text-gray-300 group-hover:text-white transition-colors duration-200" />
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+</Layout>
